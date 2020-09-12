@@ -2,7 +2,7 @@
 MCDR Pearl Cannon Calculator
 MPCC v1.2
 
-v1.1是MPCH，代码基本找别人写的，然后有好多bug，今天自己写好了MPCCv1.2
+v1.1是MPCH，代码基本找别人写的，有亿点bug，今天自己写好了MPCCv1.2
 
 一个基于MCDR的珍珠炮射程计算器，有平射和抛射两种计算方式，把MPCC.py放进服务器文件夹的内的plugins文件夹即可
 
