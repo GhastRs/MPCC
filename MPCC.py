@@ -1,44 +1,67 @@
+# -*- coding: utf-8 -*-
 import math
+
+#插件源码太烂了 别骂了别骂了孩子要傻了
+
+'''
+MC一般指令染色规则
+找不到 报错 数值后缀(L/b/d/f) : §c, 红色
+坐标 数值 字符串 : §a, 浅绿色
+数据 : §6, 金色
+括号 玩家 物品或结构名称 : §f, 白色
+属性名称 : §b, 水蓝色
+'''
 
 MPCC = '''
 ========[ MCDR ] §bPearl§r §6Cannon§r §cCalculator§r========
-MCDR Pearl Cannon Calculator v1.2
+MCDR Pearl Cannon Calculator §av2.1§r
+现在大多数生电服都装了珍珠炮, 于是我写了这个插件辅助计算~
+目前支持FTL-L和FTL-H型珍珠炮
 
-§b!!MPCC§r 显示这条信息
-§b!!MPCC calculate§r来进行计算
-目前有§d平射§r(0~10度角,填写1)和§d抛射§r(15~45度角,填写2)
+§b!!MPCC§r 显示帮助信息
+§6!!MPCC §ccal§r 进行计算
 
-使用方法:
-§b!!MPCC§r §6calculate§r [< 模式 >] [< 珍珠初速度(推荐Carpet) >]
-[< 珍珠与TNT角度(视情况而定,平射模式不填) >]
-例如:
-平射: §b!!MPCC§r §6calculate§r §c1§r 320
-抛射: §b!!MPCC§r §6calculate§r §c2§r 320 16
+使用举例:
+自动获取: §b!!MPCC§r §6cal§r §cal§r
+手动输入: §b!!MPCC§r §6cal§r §cts§r 480 2 480 
+此处数据分别为珍珠XYZ初速度, 手动输入请填写数据,
+自动获取输入cal al即可(照搬示例)
 
-各项数据越精确, 结果越精确
-对于填写错误,作者对错误结果§c概不负责§r
-有Bug请§d在Bilibili私信GhastRs§r,会在v1.3更新
-================================
+珍珠Y轴速度过大是珍珠炮问题, 没珍珠炮偏向加速Y轴向天上打的.
+有Bug或有好想法请在B站私信§dGhastRs§r, 会在v2.2更新
+也可以在Github [ MPCC ]的Issue提交(最快查看)
+
+挖个新坑: §b!!MPCC dl§r 模拟TNT在中央起爆起全程珍珠动量, 并计算落地坐标
+========================================
 '''
 
-def work(server, info):
-	if info.is_player == 1:
-		if info.content.startswith('!!MPCC'):
-			if info.content.startswith('!!MPCC calculate'):
-				if info.content.startswith('!!MPCC calculate 1'):
-					PearlSpeed1 = math.ceil(float(info.content.split()[3]))
-					FinalValue1 = str(PearlSpeed1 * 100)
-					server.say('[ MPCC ] 计算结果 : ' + FinalValue1)
-				elif info.content.startswith('!!MPCC calculate 2'):
-					PearlSpeed2 = math.ceil(int(info.content.split()[3]))
-					Angle = math.ceil(float(info.content.split()[4]))
-					FinalValue2 = str(PearlSpeed2 * 100 * ( Angle + 100 ) / 100)
-					server.say('[ MPCC ] 计算结果 : ' + FinalValue2)
-				else:
-					server.say('填写错误,请认真阅读帮助信息,谢谢~')
-			else:
-				server.say(MPCC)
+def work(server, info, message, text, command):
+	if info.content.startswith('!!MPCC'): #判定开始
+		if info.content.startswith('!!MPCC cal'): #计算模式
+			if info.content.startswith('!!MPCC cal al'): #Auto-Log模式
 
-def on_info(server, info):
-	if info.is_player :
-		work(server, info)
+				X1 = 
+				Y1 = 
+				Z1 = 
+				if X1 >= Z1:
+					FinalValue1 = str(X1 * 100)
+				else:
+					FinalValue2 = str(Z1 * 101)
+			elif info.content.startswith('!!MPCC cal ts'): #手动输入模式
+				X2 = math.ceil(float(info.content.split()[6]))
+				Y2 = math.ceil(float(info.content.split()[7]))
+				Z2 = math.ceil(float(info.content.split()[8]))
+				if X2 >= Z2:
+					FinalValue1 = str(X2 * 100)
+				else:
+					FinalValue2 = str(Z2 * 101)
+			else: #输入错误
+				server.say('填写错误, 请阅读帮助信息, 谢谢~')
+		elif info.content.startswith('!!MPCC dl'): #模拟模式
+
+
+		else:
+			server.say(MPCC) #帮助信息
+
+def on_load(server, old):
+	server.add_help_message('!!MPCC', '珍珠炮计算插件') #添加MCDR!!help内的帮助信息
